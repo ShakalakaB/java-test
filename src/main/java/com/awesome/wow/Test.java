@@ -1,6 +1,10 @@
 package com.awesome.wow;
 
+import org.json.JSONObject;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,57 +22,60 @@ public class Test {
 
         Test test = new Test();
 //        test.lambdaTest();
-        List<Car> list = new ArrayList<>();
-        Car car1 = new Car();
-        Car car2 = new Car();
 
-        Wheel wheel1 = new Wheel(1L, "wheel1");
-        Wheel wheel2 = new Wheel(2L, "wheel2");
-        Wheel wheel3 = new Wheel(3L, "wheel3");
+        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
+        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
+        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
+        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
+        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
 
-        car1.setWheels(Arrays.asList(wheel1));
-        car2.setWheels(Arrays.asList(wheel2, wheel3));
+//        Wheel wheel1 = new Wheel(1L, "wheel1");
+//        Wheel wheel2 = new Wheel(2L, "wheel2");
+//        Wheel wheel3 = new Wheel(3L, "wheel3");
+//
+//        car1.setWheels(Arrays.asList(wheel1));
+//        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        list.add(car1);
-        list.add(car2);
+        List<Car> list = Arrays.asList(car1,car2, car3, car4, car5);
 
-        List<Wheel> wheels = list.stream()
-                .flatMap(car -> car.getWheels().stream())
-                .collect(Collectors.toList());
+//        Map<Integer, List<Car>> map = list.stream()
+//                .collect(Collectors.groupingBy(Car::getKeyA));
+//
+//        JSONObject jsonObject = new JSONObject(map);
+//
+//        System.out.println(jsonObject);
 
-        wheels.stream()
-                .filter(wheel -> wheel.getId() == 1L)
-                .forEach(wheel -> wheel.setName("after " + wheel.getName()));
+//        Map<Tuple, List<Car>> map2 = list.stream()
+//                .collect(Collectors.groupingBy(car -> new Tuple(car.getKeyA(), car.getKeyB())));
+//
+//        JSONObject json = new JSONObject(map2);
+//        System.out.println(json);
+
+        Map<Integer, Map<Integer,List<Car>>> map3 = list.stream()
+                .collect(Collectors.collectingAndThen(Collectors.groupingBy(Car::getKeyA), result -> {
+                    Map<Integer, Map<Integer, List<Car>>> nestedMap = new HashMap<>();
+
+                    result.entrySet().stream()
+                            .forEach(e -> {
+                                nestedMap.put(e.getKey(), e.getValue().stream()
+                                        .collect(Collectors.groupingBy(Car::getKeyB)));
+                            });
+
+                    return nestedMap;
+                }));
+
+//        List<Wheel> wheels = list.stream()
+//                .flatMap(car -> car.getWheels().stream())
+//                .collect(Collectors.toList());
+
+//        wheels.stream()
+//                .filter(wheel -> wheel.getId() == 1L)
+//                .forEach(wheel -> wheel.setName("after " + wheel.getName()));
 
         System.out.println("santa");
 
 //        System.out.println(map1.put("claus", "uno"));
 
-
-//        Stream<String[]> str = Stream.of(new String[][]{
-//                {"GFG", "GeeksForGeeks"},
-//                {"g", "geeks"},
-//                {"GFG", "geeksforgeeks"}
-//        });
-//
-//        Map<String, String> map = str.collect(Collectors.toMap(
-//                p -> p[0], p -> p[1], (s, a) -> s + ", " + a
-//        ));
-
-//        Map<String, String> map = str.collect(Collectors.toMap(
-//                p -> p[0], p -> p[1]
-//        ));
-
-//        System.out.println("Map:" + map);
-
-//        List<String> stringList = Arrays.asList("lemon", "santa", "Yada");
-//
-//        Optional<List<String>> result = Optional.ofNullable(stringList).filter(strings -> {
-//            System.out.println(strings);
-//            return true;
-//        });
-//
-//        System.out.println("result: " + result.get());
     }
 
     public void lambdaTest() {
