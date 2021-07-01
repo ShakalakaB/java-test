@@ -1,13 +1,12 @@
 package com.awesome.wow;
 
-import org.json.JSONObject;
+import com.awesome.wow.annotation.AnnotationProcess;
+import com.awesome.wow.annotation.Init;
+import com.awesome.wow.dto.Person;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class Test {
@@ -21,13 +20,13 @@ public class Test {
         map1.put("santa", "claus");
         
         Test test = new Test();
-//        test.lambdaTest();
+        test.annotationTest();
 
-        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
-        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
-        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
-        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
-        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
+//        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
+//        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
+//        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
+//        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
+//        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
 
 //        Wheel wheel1 = new Wheel(1L, "wheel1");
 //        Wheel wheel2 = new Wheel(2L, "wheel2");
@@ -51,29 +50,17 @@ public class Test {
 //
 //        JSONObject json = new JSONObject(map2);
 //        System.out.println(json);
-
-        Map<Integer, Map<Integer,List<Car>>> map3 = list.stream()
-                .collect(Collectors.collectingAndThen(Collectors.groupingBy(Car::getKeyA), result -> {
-                    Map<Integer, Map<Integer, List<Car>>> nestedMap = new HashMap<>();
-
-                    result.entrySet().stream()
-                            .forEach(e -> {
-                                nestedMap.put(e.getKey(), e.getValue().stream()
-                                        .collect(Collectors.groupingBy(Car::getKeyB)));
-                            });
-
-                    return nestedMap;
-                }));
-
-//        List<Wheel> wheels = list.stream()
-//                .flatMap(car -> car.getWheels().stream())
-//                .collect(Collectors.toList());
-
-//        wheels.stream()
-//                .filter(wheel -> wheel.getId() == 1L)
-//                .forEach(wheel -> wheel.setName("after " + wheel.getName()));
-
-        System.out.println(map3.get("santa"));
+//        Class<BusinessLogic> businessLogicClass = BusinessLogic.class;
+//        for (Method method : businessLogicClass.getMethods()) {
+//            Todo todoAnnotation = (Todo) method.getAnnotation(Todo.class);
+//
+//            if (todoAnnotation != null) {
+//                System.out.println("method name: " + method.getName());
+//                System.out.println("author: " + todoAnnotation.author());
+//                System.out.println("author: " + todoAnnotation.priority());
+//                System.out.println("author: " + todoAnnotation.status());
+//            }
+//        }
 
 //        System.out.println(map1.put("claus", "uno"));
 
@@ -107,7 +94,15 @@ public class Test {
         System.out.println(lambda.method(string));
     }
 
-    public void nullableTest(String a, String b) {
-        System.out.println("a " + a + " b: " + b);
+    public void annotationTest() {
+        Person person = new Person();
+        person.setFirstName("first");
+        person.setLastName("last");
+        person.setAge("11");
+        person.setAddress("address");
+
+        AnnotationProcess annotationProcess = new AnnotationProcess();
+        String json = annotationProcess.convertToJson(person);
+        System.out.println(json);
     }
 }
