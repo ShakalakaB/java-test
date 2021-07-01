@@ -19,7 +19,7 @@ public class Test {
         map1.put("lemon", "sour");
         map1.put("lichee", "sweet");
         map1.put("santa", "claus");
-
+        
         Test test = new Test();
 //        test.lambdaTest();
 
@@ -36,7 +36,8 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        List<Car> list = Arrays.asList(car1,car2, car3, car4, car5);
+//        List<Car> list = Arrays.asList(car1,car2, car3, car4, car5);
+        List<Car> list = new ArrayList<>();
 
 //        Map<Integer, List<Car>> map = list.stream()
 //                .collect(Collectors.groupingBy(Car::getKeyA));
@@ -72,7 +73,7 @@ public class Test {
 //                .filter(wheel -> wheel.getId() == 1L)
 //                .forEach(wheel -> wheel.setName("after " + wheel.getName()));
 
-        System.out.println("santa");
+        System.out.println(map3.get("santa"));
 
 //        System.out.println(map1.put("claus", "uno"));
 
