@@ -11,13 +11,13 @@ import java.util.List;
 @Setter
 @Builder
 public class Car implements Vehicle{
-    private String name;
+    protected String name;
 
-    private Integer keyA;
+    protected Integer keyA;
 
-    private Integer keyB;
+    protected Integer keyB;
 
-    private List<Wheel> wheels = new ArrayList<>();
+    protected List<Wheel> wheels = new ArrayList<>();
 
     @Override
     public String getBrand() {
@@ -32,5 +32,9 @@ public class Car implements Vehicle{
     @Override
     public String slowDown() {
         return null;
+    }
+
+    private static void run(String command) {
+        System.out.println("car command: " + command);
     }
 }

@@ -3,30 +3,44 @@ package com.awesome.wow;
 import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.annotation.Init;
 import com.awesome.wow.dto.Person;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
+import javax.naming.PartialResultException;
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Test {
 
-    private String value = "Enclosing scope value";
+    private String value = "value";
 
     public static void main(String[] args) {
         Map<String, String> map1 = new HashMap<>();
         map1.put("lemon", "sour");
         map1.put("lichee", "sweet");
         map1.put("santa", "claus");
-        
-        Test test = new Test();
-        test.annotationTest();
 
-//        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
-//        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
-//        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
-//        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
-//        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
+        Test test = new Test();
+//        test.annotationTest();
+
+        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
+        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
+        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
+        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
+        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
+
+        List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
 //        Wheel wheel1 = new Wheel(1L, "wheel1");
 //        Wheel wheel2 = new Wheel(2L, "wheel2");
@@ -35,35 +49,21 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-//        List<Car> list = Arrays.asList(car1,car2, car3, car4, car5);
-        List<Car> list = new ArrayList<>();
+        int[] myArray = {1, 2, 3};
+       List<int[]> list = Arrays.asList(myArray);
+       List<Integer> integerList = Arrays.asList(1, 2, 3);
+    }
 
-//        Map<Integer, List<Car>> map = list.stream()
-//                .collect(Collectors.groupingBy(Car::getKeyA));
-//
-//        JSONObject jsonObject = new JSONObject(map);
-//
-//        System.out.println(jsonObject);
-
-//        Map<Tuple, List<Car>> map2 = list.stream()
-//                .collect(Collectors.groupingBy(car -> new Tuple(car.getKeyA(), car.getKeyB())));
-//
-//        JSONObject json = new JSONObject(map2);
-//        System.out.println(json);
-//        Class<BusinessLogic> businessLogicClass = BusinessLogic.class;
-//        for (Method method : businessLogicClass.getMethods()) {
-//            Todo todoAnnotation = (Todo) method.getAnnotation(Todo.class);
-//
-//            if (todoAnnotation != null) {
-//                System.out.println("method name: " + method.getName());
-//                System.out.println("author: " + todoAnnotation.author());
-//                System.out.println("author: " + todoAnnotation.priority());
-//                System.out.println("author: " + todoAnnotation.status());
-//            }
-//        }
-
-//        System.out.println(map1.put("claus", "uno"));
-
+    private int swap(int value) {
+        try {
+            System.out.println("inside try");
+            return value * value;
+        } finally {
+            System.out.println("inside final");
+            if (value == 2) {
+                return 0;
+            }
+        }
     }
 
     public void lambdaTest() {
