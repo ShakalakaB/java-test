@@ -5,6 +5,7 @@ import com.awesome.wow.annotation.Init;
 import com.awesome.wow.dto.Person;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import org.json.JSONObject;
 
 import javax.naming.PartialResultException;
 import java.lang.reflect.Array;
@@ -48,10 +49,25 @@ public class Test {
 //
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
+        Thread thread1 = new Thread() {
+            @Override
+            public void run() {
+                Singleton singleton = Singleton.getInstance("thread1");
+                System.out.println(singleton.value);
+            }
+        };
 
-        int[] myArray = {1, 2, 3};
-       List<int[]> list = Arrays.asList(myArray);
-       List<Integer> integerList = Arrays.asList(1, 2, 3);
+        Thread thread2 = new Thread() {
+            @Override
+            public void run() {
+                Singleton singleton = Singleton.getInstance("thread2");
+                System.out.println(singleton.value);
+            }
+        };
+
+        thread2.start();
+
+        thread1.start();
     }
 
     private int swap(int value) {
