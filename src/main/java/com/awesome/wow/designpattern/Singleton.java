@@ -1,4 +1,4 @@
-package com.awesome.wow;
+package com.awesome.wow.designpattern;
 
 public class Singleton {
     private static Singleton instance;

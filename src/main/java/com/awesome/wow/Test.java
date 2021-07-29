@@ -1,25 +1,15 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
-import com.awesome.wow.annotation.Init;
+import com.awesome.wow.designpattern.ProxyFactory;
+import com.awesome.wow.designpattern.Singleton;
+import com.awesome.wow.designpattern.SmsService;
+import com.awesome.wow.designpattern.SmsServiceImpl;
 import com.awesome.wow.dto.Person;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import org.json.JSONObject;
 
-import javax.naming.PartialResultException;
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class Test {
@@ -49,25 +39,9 @@ public class Test {
 //
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
-        Thread thread1 = new Thread() {
-            @Override
-            public void run() {
-                Singleton singleton = Singleton.getInstance("thread1");
-                System.out.println(singleton.value);
-            }
-        };
-
-        Thread thread2 = new Thread() {
-            @Override
-            public void run() {
-                Singleton singleton = Singleton.getInstance("thread2");
-                System.out.println(singleton.value);
-            }
-        };
-
-        thread2.start();
-
-        thread1.start();
+        SmsService smsService = (SmsService) ProxyFactory.getProxy(new SmsServiceImpl());
+//        Object smsService = ProxyFactory.getProxy(new SmsServiceImpl());
+        smsService.send("java");
     }
 
     private int swap(int value) {
