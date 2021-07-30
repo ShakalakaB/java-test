@@ -1,10 +1,7 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
-import com.awesome.wow.designpattern.ProxyFactory;
-import com.awesome.wow.designpattern.Singleton;
-import com.awesome.wow.designpattern.SmsService;
-import com.awesome.wow.designpattern.SmsServiceImpl;
+import com.awesome.wow.designpattern.*;
 import com.awesome.wow.dto.Person;
 
 import java.util.*;
@@ -39,9 +36,11 @@ public class Test {
 //
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
-        SmsService smsService = (SmsService) ProxyFactory.getProxy(new SmsServiceImpl());
-//        Object smsService = ProxyFactory.getProxy(new SmsServiceImpl());
-        smsService.send("java");
+
+//        SmsService smsService = (SmsService) ProxyFactory.getProxy(new SmsServiceImpl());
+//        smsService.send("java");
+        SmsServiceImpl smsService = (SmsServiceImpl) CglibProxyFactory.getProxy(SmsServiceImpl.class);
+         smsService.send("java");
     }
 
     private int swap(int value) {
