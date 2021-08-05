@@ -1,12 +1,15 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
+import com.awesome.wow.datastructure.MyHashMap;
 import com.awesome.wow.designpattern.*;
 import com.awesome.wow.dto.Person;
 
+import javax.print.DocFlavor;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class Test {
@@ -37,10 +40,10 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-//        SmsService smsService = (SmsService) ProxyFactory.getProxy(new SmsServiceImpl());
-//        smsService.send("java");
-        SmsServiceImpl smsService = (SmsServiceImpl) CglibProxyFactory.getProxy(SmsServiceImpl.class);
-         smsService.send("java");
+        MyHashMap<String, String> myHashMap = new MyHashMap<>();
+        myHashMap.put("santa", "claus");
+        String value = myHashMap.get("santa");
+        System.out.println(value);
     }
 
     private int swap(int value) {
