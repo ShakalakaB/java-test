@@ -1,6 +1,7 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
+import com.awesome.wow.concurrent.SharedMapWithUserContext;
 import com.awesome.wow.datastructure.MyHashMap;
 import com.awesome.wow.designpattern.*;
 import com.awesome.wow.dto.Person;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 public class Test {
 
     private String value = "value";
+    private final Object resource1 = new Object();
+    private final Object resource2 = new Object();
 
     public static void main(String[] args) {
         Map<String, String> map1 = new HashMap<>();
@@ -40,10 +43,20 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        MyHashMap<String, String> myHashMap = new MyHashMap<>();
-        myHashMap.put("santa", "claus");
-        String value = myHashMap.get("santa");
-        System.out.println(value);
+        SharedMapWithUserContext user1 = new SharedMapWithUserContext(1);
+        SharedMapWithUserContext user2 = new SharedMapWithUserContext(2);
+        new Thread(user1).start();
+        new Thread(user2).start();
+
+        System.out.println(SharedMapWithUserContext.userContextPerUserId.size());
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(SharedMapWithUserContext.userContextPerUserId.size());
     }
 
     private int swap(int value) {
