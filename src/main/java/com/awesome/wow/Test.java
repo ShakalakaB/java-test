@@ -1,14 +1,13 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
-import com.awesome.wow.concurrent.SharedMapWithUserContext;
-import com.awesome.wow.datastructure.MyHashMap;
-import com.awesome.wow.designpattern.*;
 import com.awesome.wow.dto.Person;
+import com.google.common.util.concurrent.MoreExecutors;
 
 import javax.print.DocFlavor;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -43,20 +42,36 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        SharedMapWithUserContext user1 = new SharedMapWithUserContext(1);
-        SharedMapWithUserContext user2 = new SharedMapWithUserContext(2);
-        new Thread(user1).start();
-        new Thread(user2).start();
+//        Executor executor = Executors.newSingleThreadExecutor();
+//        executor.execute(() -> System.out.println("from executor"));
 
-        System.out.println(SharedMapWithUserContext.userContextPerUserId.size());
+//        ExecutorService executorService = Executors.newFixedThreadPool(10);
+//        Future<String> future = executorService.submit(() -> "from executor service");
+//        try {
+//            System.out.println(future.get());
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+//
+//        threadPoolExecutor.submit(() -> {
+//            System.out.println("inside 1st");
+//            Thread.sleep(1000);
+//            return null;
+//        });
+//        threadPoolExecutor.submit(() -> {
+//            System.out.println("inside 2nd");
+//            Thread.sleep(1000);
+//            return null;
+//        });
+//        threadPoolExecutor.submit(() -> {
+//            System.out.println("inside 3rd");
+//            Thread.sleep(1000);
+//            return null;
+//        });
 
-        System.out.println(SharedMapWithUserContext.userContextPerUserId.size());
+
     }
 
     private int swap(int value) {
