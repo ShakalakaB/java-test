@@ -1,43 +1,33 @@
 package com.awesome.wow.concurrent;
 
-public class TaskRunner {
-    private static int number;
-    private static boolean ready;
+import java.util.Date;
 
-    private static class Reader extends Thread {
+public class TaskRunner implements Runnable{
+    private String command;
 
-        @Override
-        public void run() {
-//            ready = false;
-//            System.out.println("set ready: " + ready);
-//
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//            System.out.println("child thread" + ready);
-            while (!ready) {
-                System.out.println("inside loop");
-                Thread.yield();
-            }
-
-            System.out.println(number);
-        }
+    public TaskRunner(String command) {
+        this.command = command;
     }
 
-    public static void main(String[] args) {
-        new Reader().start();
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " Start. Time = " + new Date());
+        processCommand();
+        System.out.println(Thread.currentThread().getName() + " End. Time = " + new Date());
+    }
 
+    private void processCommand() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        number = 42;
-        ready = true;
-        System.out.println("main thread " + ready);
+    @Override
+    public String toString() {
+        return "TaskRunner{" +
+                "command='" + command + '\'' +
+                '}';
     }
 }

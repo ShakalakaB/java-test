@@ -1,6 +1,7 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
+import com.awesome.wow.concurrent.MyThreadPool;
 import com.awesome.wow.dto.Person;
 
 import java.util.*;
@@ -39,34 +40,7 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> System.out.println("from executor"));
-
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        Future<String> future = executorService.submit(() -> "from executor service");
-        try {
-            System.out.println(future.get());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
-
-        threadPoolExecutor.submit(() -> {
-            System.out.println("inside 1st");
-            Thread.sleep(1000);
-            return null;
-        });
-        threadPoolExecutor.submit(() -> {
-            System.out.println("inside 2nd");
-            Thread.sleep(1000);
-            return null;
-        });
-        threadPoolExecutor.submit(() -> {
-            System.out.println("inside 3rd");
-            Thread.sleep(1000);
-            return null;
-        });
+        MyThreadPool.startUp();
 
     }
 
