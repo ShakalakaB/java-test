@@ -1,7 +1,7 @@
 package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
-import com.awesome.wow.concurrent.MyThreadPool;
+import com.awesome.wow.concurrent.TaskRunner;
 import com.awesome.wow.dto.Person;
 
 import java.util.*;
@@ -40,34 +40,10 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        Runnable runnable1 = () -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//            car1.increment();
-            car1.atomicIncrement();
+        TaskRunner task = new TaskRunner();
 
-//            Integer keyA = car1.getKeyA();
-//            car1.setKeyA(car1.getKeyA() + 1);
-        };
-
-        Runnable runnable2 = () -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//            car1.increment();
-            car1.atomicIncrement();
-
-//            Integer keyA = car1.getKeyA();
-//            car1.setKeyA(car1.getKeyA() + 1);
-        };
-
-        Thread thread1 = new Thread(runnable1);
-        Thread thread2 = new Thread(runnable2);
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
 
         thread1.start();
         thread2.start();
@@ -78,7 +54,7 @@ public class Test {
             e.printStackTrace();
         }
 
-        System.out.println(car1.getCounter());
+        System.out.println(task.getCounter());
 
     }
 

@@ -1,33 +1,33 @@
 package com.awesome.wow.concurrent;
 
-import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskRunner implements Runnable{
     private String command;
 
-    public TaskRunner(String command) {
-        this.command = command;
+    private AtomicInteger counter;
+//    private int counter;
+
+    public TaskRunner() {
+        this.counter = new AtomicInteger();
+    }
+
+    public int getCounter() {
+        return counter.get();
+//        return counter;
     }
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + " Start. Time = " + new Date());
-        processCommand();
-        System.out.println(Thread.currentThread().getName() + " End. Time = " + new Date());
-    }
-
-    private void processCommand() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
 
-    @Override
-    public String toString() {
-        return "TaskRunner{" +
-                "command='" + command + '\'' +
-                '}';
+        for (int i =0; i < 3; i++) {
+            counter.addAndGet(1);
+//            counter++;
+        }
     }
 }
