@@ -40,7 +40,45 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        MyThreadPool.startUp();
+        Runnable runnable1 = () -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//            car1.increment();
+            car1.atomicIncrement();
+
+//            Integer keyA = car1.getKeyA();
+//            car1.setKeyA(car1.getKeyA() + 1);
+        };
+
+        Runnable runnable2 = () -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+//            car1.increment();
+            car1.atomicIncrement();
+
+//            Integer keyA = car1.getKeyA();
+//            car1.setKeyA(car1.getKeyA() + 1);
+        };
+
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(car1.getCounter());
 
     }
 
