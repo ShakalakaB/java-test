@@ -1,8 +1,6 @@
 package com.awesome.wow;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Car implements Vehicle{
     protected String name;
 
@@ -20,7 +20,9 @@ public class Car implements Vehicle{
 
     protected List<Wheel> wheels = new ArrayList<>();
 
-    private final AtomicInteger counter = new AtomicInteger();
+    private final AtomicInteger atomicCounter = new AtomicInteger();
+
+    private volatile long counter = 0;
 
     @Override
     public String getBrand() {
@@ -45,20 +47,15 @@ public class Car implements Vehicle{
         this.keyA++;
     }
 
-    public int getCounter() {
-        return counter.get();
+    public int getAtomicCounter() {
+        return atomicCounter.get();
     }
 
     public void atomicIncrement() {
-        counter.addAndGet(1);
-//        while (true) {
-//            int existingValue = getCounter();
-//            int newValue = existingValue + 1;
-//
-//            if (counter.compareAndSet(existingValue, newValue)) {
-//                counter.set(newValue);
-//                return;
-//            }
-//        }
+        atomicCounter.addAndGet(1);
+    }
+
+    public long counterIncrement() {
+        return counter++;
     }
 }

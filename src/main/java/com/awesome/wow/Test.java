@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
 
-
 public class Test {
 
     private String value = "value";
@@ -40,21 +39,7 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-        TaskRunner task = new TaskRunner();
 
-        Thread thread1 = new Thread(task);
-        Thread thread2 = new Thread(task);
-
-        thread1.start();
-        thread2.start();
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(task.getCounter());
 
     }
 
