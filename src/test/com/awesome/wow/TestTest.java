@@ -1,63 +1,38 @@
 package com.awesome.wow;
 
-import com.google.code.tempusfugit.concurrency.ConcurrentTestRunner;
-import com.google.code.tempusfugit.concurrency.IntermittentTestRunner;
-import com.google.code.tempusfugit.concurrency.annotations.Intermittent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import com.awesome.wow.dto.Student;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
+
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(ConcurrentTestRunner.class)
-public class TestTest {
-    private static int testCounter = 0;
-    private static int afterCounter = 0;
-    private static int afterClassCounter = 0;
+class TestTest {
+    Student student;
 
-    @org.junit.Test
-    public void shouldRunInParallel1() {
-        System.out.println("I'm running on thread " + Thread.currentThread().getName());
+    @BeforeEach
+    void setUp() {
+        student = new Student(1L, "studentA", Student.Gender.FEMALE, 3);
     }
 
-    @org.junit.Test
-    public void shouldRunInParallel2() {
-        System.out.println("I'm running on thread " + Thread.currentThread().getName());
+    @Test
+    void serializationTest() throws IOException, ClassNotFoundException {
+        FileOutputStream fileOutputStream = new FileOutputStream("./serialization.txt");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(student);
+        objectOutputStream.flush();
+        objectOutputStream.close();
     }
 
-    @org.junit.Test
-    public void shouldRunInParallel3() {
-        System.out.println("I'm running on thread " + Thread.currentThread().getName());
+    @Test
+    void unserializeTest() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream("./serialization.txt");
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        Student unserializedStudent = (Student) objectInputStream.readObject();
+        objectInputStream.close();
+
+        assertEquals(student.getId(), unserializedStudent.getId());
     }
-
-    @org.junit.Test
-    public void junit4Test() {
-        System.out.println("junit 4 test");
-        assertEquals(1, 1);
-    }
-
-    @After
-    public void assertAfterIsCalledRepeatedlyForAnnotatedTests() {
-        System.out.println("after method");
-        assertEquals(afterCounter, testCounter);
-    }
-
-//    @AfterEach
-//    void tearDown() {
-//        System.out.println("teardown method");
-//        assertEquals(afterCounter, testCounter);
-//    }
-
-//    @AfterAll
-//    public static void assertAfterClassIsCalledOnce() {
-//        System.out.println("after all");
-//        assertEquals(0, afterClassCounter);
-//        assertEquals(99, testCounter);
-//    }
-
-
 }

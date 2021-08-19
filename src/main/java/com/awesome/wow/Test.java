@@ -3,7 +3,9 @@ package com.awesome.wow;
 import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.concurrent.TaskRunner;
 import com.awesome.wow.dto.Person;
+import com.awesome.wow.dto.Student;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -39,7 +41,9 @@ public class Test {
 //        car1.setWheels(Arrays.asList(wheel1));
 //        car2.setWheels(Arrays.asList(wheel2, wheel3));
 
-
+        Student student = new Student(1L, "studentA", Student.Gender.FEMALE, 3);
+        System.out.println(student.toString());
+        System.out.println(student);
 
     }
 
