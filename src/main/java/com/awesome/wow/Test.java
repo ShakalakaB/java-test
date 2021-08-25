@@ -4,6 +4,8 @@ import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.concurrent.TaskRunner;
 import com.awesome.wow.dto.Person;
 import com.awesome.wow.dto.Student;
+import com.awesome.wow.generic.GenericClass;
+import com.awesome.wow.generic.GenericExtendMethod;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -18,13 +20,7 @@ public class Test {
     private final Object resource2 = new Object();
 
     public static void main(String[] args) {
-        Map<String, String> map1 = new HashMap<>();
-        map1.put("lemon", "sour");
-        map1.put("lichee", "sweet");
-        map1.put("santa", "claus");
-
         Test test = new Test();
-//        test.annotationTest();
 
         Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
         Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
@@ -33,30 +29,18 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
 
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
+        MyCar myCar = new MyCar();
 
-//        Wheel wheel1 = new Wheel(1L, "wheel1");
-//        Wheel wheel2 = new Wheel(2L, "wheel2");
-//        Wheel wheel3 = new Wheel(3L, "wheel3");
-//
-//        car1.setWheels(Arrays.asList(wheel1));
-//        car2.setWheels(Arrays.asList(wheel2, wheel3));
+        GenericExtendMethod genericExtendMethod = new GenericExtendMethod();
+        Car car = genericExtendMethod.getBrand(car1);
+        MyCar myCar1 = genericExtendMethod.getBrand(myCar);
+        List<Car> carList1 = genericExtendMethod.listBrand(carList);
 
-        Student student = new Student(1L, "studentA", Student.Gender.FEMALE, 3);
-        System.out.println(student.toString());
-        System.out.println(student);
+        GenericClass<Car> genericClass = new GenericClass<>();
+        Car car6 = genericClass.getBrand(car1);
+        List<Car> carList2 = genericClass.listBrand(carList);
 
-    }
 
-    private int swap(int value) {
-        try {
-            System.out.println("inside try");
-            return value * value;
-        } finally {
-            System.out.println("inside final");
-            if (value == 2) {
-                return 0;
-            }
-        }
     }
 
     public void lambdaTest() {

@@ -26,7 +26,7 @@ public class Car implements Vehicle{
 
     @Override
     public String getBrand() {
-        return null;
+        return "car brand";
     }
 
     @Override
