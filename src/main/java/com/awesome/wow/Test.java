@@ -2,6 +2,9 @@ package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.concurrent.TaskRunner;
+import com.awesome.wow.designpattern.CglibProxyFactory;
+import com.awesome.wow.designpattern.SmsService;
+import com.awesome.wow.designpattern.SmsServiceImpl;
 import com.awesome.wow.dto.Person;
 import com.awesome.wow.dto.Student;
 import com.awesome.wow.generic.GenericClass;
@@ -31,14 +34,19 @@ public class Test {
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
         MyCar myCar = new MyCar();
 
-        GenericExtendMethod genericExtendMethod = new GenericExtendMethod();
-        Car car = genericExtendMethod.getBrand(car1);
-        MyCar myCar1 = genericExtendMethod.getBrand(myCar);
-        List<Car> carList1 = genericExtendMethod.listBrand(carList);
+//        GenericExtendMethod genericExtendMethod = new GenericExtendMethod();
+//        Car car = genericExtendMethod.getBrand(car1);
+//        MyCar myCar1 = genericExtendMethod.getBrand(myCar);
+//        List<Car> carList1 = genericExtendMethod.listBrand(carList);
+//
+//        GenericClass<Car> genericClass = new GenericClass<>();
+//        Car car6 = genericClass.getBrand(car1);
+//        List<Car> carList2 = genericClass.listBrand(carList);
 
-        GenericClass<Car> genericClass = new GenericClass<>();
-        Car car6 = genericClass.getBrand(car1);
-        List<Car> carList2 = genericClass.listBrand(carList);
+//        SmsServiceImpl smsService = (SmsServiceImpl) CglibProxyFactory.getProxy(SmsServiceImpl.class);
+        SmsService smsService = (SmsService) CglibProxyFactory.getProxy(SmsServiceImpl.class);
+        smsService.send("hhhh");
+//        smsService.internalSend();
 
 
     }
