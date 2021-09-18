@@ -3,7 +3,10 @@ package com.awesome.wow;
 import com.awesome.wow.dto.Student;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
 
@@ -34,5 +37,12 @@ class TestTest {
         objectInputStream.close();
 
         assertEquals(student.getId(), unserializedStudent.getId());
+    }
+
+    @ParameterizedTest
+    @DisplayName("parameter test")
+    @ValueSource(strings = {"radar", "car", "door"})
+    void parameterizedTest(String string) {
+        assertTrue(string.startsWith("r"));
     }
 }
