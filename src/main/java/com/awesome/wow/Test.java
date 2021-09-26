@@ -4,8 +4,6 @@ import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.dto.Person;
 import com.awesome.wow.treesearch.OrderStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 import java.util.List;
