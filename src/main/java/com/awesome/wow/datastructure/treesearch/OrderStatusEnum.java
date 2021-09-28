@@ -1,4 +1,4 @@
-package com.awesome.wow.treesearch;
+package com.awesome.wow.datastructure.treesearch;
 
 import com.awesome.wow.dto.SubStatusDTO;
 import lombok.Getter;

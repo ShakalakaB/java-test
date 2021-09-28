@@ -2,9 +2,11 @@ package com.awesome.wow;
 
 import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.dto.Person;
-import com.awesome.wow.treesearch.OrderStatusEnum;
+import com.awesome.wow.datastructure.treesearch.OrderStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
@@ -15,7 +17,7 @@ public class Test {
     private final Object resource1 = new Object();
     private final Object resource2 = new Object();
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws UnknownHostException {
         Test test = new Test();
 
         Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
@@ -25,10 +27,9 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
+        InetAddress ip = InetAddress.getLocalHost();
 
-        System.out.println(OrderStatusEnum.getStates().length);
-
-
+        System.out.println((long) Math.abs(ip.getHostAddress().hashCode()) % 32L);
     }
 
     public void lambdaTest() {
