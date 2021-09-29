@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Enumeration;
 
+// detail about design: https://www.callicoder.com/distributed-unique-ID-sequence-number-generator/
 public class Snowflake2 {
     private static final int UNUSED_BITS = 1; // Sign bit, Unused (always set to 0)
     private static final int EPOCH_BITS = 41;
