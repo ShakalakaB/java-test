@@ -32,8 +32,8 @@ public class SnowflakeIdWorker {
     }
 
     public SnowflakeIdWorker(long workerId, long datacenterId) {
-        if (workerId <= 31L && workerId >= 0L) {
-            if (datacenterId <= 31L && datacenterId >= 0L) {
+        if (workerId <= maxWorkerId && workerId >= 0L) {
+            if (datacenterId <= maxDatacenterId && datacenterId >= 0L) {
                 this.workerId = workerId;
                 this.datacenterId = datacenterId;
             } else {
@@ -50,7 +50,7 @@ public class SnowflakeIdWorker {
             throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", this.lastTimestamp - timestamp));
         } else {
             if (this.lastTimestamp == timestamp) {
-                this.sequence = this.sequence + 1L & 4095L;
+                this.sequence = this.sequence + 1L & sequenceMask;
                 if (this.sequence == 0L) {
                     timestamp = this.tilNextMillis(this.lastTimestamp);
                 }
@@ -59,7 +59,7 @@ public class SnowflakeIdWorker {
             }
 
             this.lastTimestamp = timestamp;
-            return timestamp - 1420041600000L << 22 | this.datacenterId << 17 | this.workerId << 12 | this.sequence;
+            return timestamp - twepoch << timestampLeftShift | this.datacenterId << datacenterIdShift | this.workerId << workerIdShift | this.sequence;
         }
     }
 

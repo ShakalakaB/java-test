@@ -3,10 +3,16 @@ package com.awesome.wow;
 import com.awesome.wow.annotation.AnnotationProcess;
 import com.awesome.wow.dto.Person;
 import com.awesome.wow.datastructure.treesearch.OrderStatusEnum;
+import com.awesome.wow.util.Snowflake2;
+import com.awesome.wow.util.SnowflakeIdWorker;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.security.SecureRandom;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.function.Function;
@@ -27,9 +33,29 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
-        InetAddress ip = InetAddress.getLocalHost();
+//        InetAddress ip = InetAddress.getLocalHost();
+//        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker();
+//        Snowflake2 snowflake2 = new Snowflake2();
 
-        System.out.println((long) Math.abs(ip.getHostAddress().hashCode()) % 32L);
+        long nodeId;
+        try {
+            StringBuilder sb = new StringBuilder();
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                byte[] mac = networkInterface.getHardwareAddress();
+                if (mac != null) {
+                    for(byte macPort: mac) {
+                        sb.append(String.format("%02X", macPort));
+                    }
+                }
+            }
+            nodeId = sb.toString().hashCode();
+        } catch (Exception ex) {
+            nodeId = (new SecureRandom().nextInt());
+        }
+        System.out.println(Instant.now().toEpochMilli());
+        System.out.println((1 << 6) | (2 << 3) | 3);
     }
 
     public void lambdaTest() {
