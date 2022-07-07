@@ -1,100 +1,67 @@
 package com.awesome.wow;
 
-import com.awesome.wow.annotation.AnnotationProcess;
-import com.awesome.wow.dto.Person;
-import com.awesome.wow.datastructure.treesearch.OrderStatusEnum;
-import com.awesome.wow.util.Snowflake2;
-import com.awesome.wow.util.SnowflakeIdWorker;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
+import com.awesome.wow.util.JsonUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Stopwatch;
+
 import java.net.UnknownHostException;
-import java.security.SecureRandom;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
-import java.util.function.Function;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Test {
-
-    private String value = "value";
-    private final Object resource1 = new Object();
-    private final Object resource2 = new Object();
 
     public static void main(String[] args) throws UnknownHostException {
         Test test = new Test();
 
-        Car car1 = Car.builder().keyA(1).keyB(2).name("car1").build();
-        Car car2 = Car.builder().keyA(2).keyB(1).name("car2").build();
-        Car car3 = Car.builder().keyA(1).keyB(2).name("car3").build();
-        Car car4 = Car.builder().keyA(2).keyB(2).name("car4").build();
-        Car car5 = Car.builder().keyA(2).keyB(2).name("car5").build();
+        Car car1 = Car.builder().keyA(1).keyB(2).name("car2").build();
+        Car car2 = Car.builder().keyA(2).keyB(1).name("car1").build();
+        Car car3 = Car.builder().keyA(1).keyB(3).name("car2").build();
+        Car car4 = Car.builder().keyA(2).keyB(2).name("car2").build();
+        Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
-//        InetAddress ip = InetAddress.getLocalHost();
-//        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker();
-//        Snowflake2 snowflake2 = new Snowflake2();
+        String json = "{\"name\":\"car2\",\"keyA\":1,\"keyB\":2,\"wheels\":null,\"atomicCounter\":0,\"counter\":0,\"brand\":\"car brand\"}\n";
 
-        long nodeId;
-        try {
-            StringBuilder sb = new StringBuilder();
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-            while (networkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = networkInterfaces.nextElement();
-                byte[] mac = networkInterface.getHardwareAddress();
-                if (mac != null) {
-                    for(byte macPort: mac) {
-                        sb.append(String.format("%02X", macPort));
-                    }
-                }
-            }
-            nodeId = sb.toString().hashCode();
-        } catch (Exception ex) {
-            nodeId = (new SecureRandom().nextInt());
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        List<CompletableFuture<Car>> futureList = new ArrayList<>();
+        for (int i =0; i < 9; i++) {
+            CompletableFuture<Car> future = CompletableFuture.supplyAsync(() -> {
+                return JsonUtil.toObject(json, new TypeReference<Car>() {});
+            });
+            futureList.add(future);
         }
-        System.out.println(Instant.now().toEpochMilli());
-        System.out.println((1 << 6) | (2 << 3) | 3);
-    }
 
-    public void lambdaTest() {
-        Lambda lambda = param -> param + " from lambda";
-        this.foo("santa", lambda);
+//        Car car = JsonUtil.toObject(json, new TypeReference<Car>() {});
+        CompletableFuture.allOf(futureList.toArray(new CompletableFuture[]{})).join();
+        System.out.println("finish " + stopwatch.toString());
 
-        Lambda lambda1 = new Lambda() {
-            String value = "Inner class value";
+        Stopwatch stopwatch1 = Stopwatch.createStarted();
+        List<CompletableFuture<Car>> futureList2 = new ArrayList<>();
+        for (int i =0; i < 9; i++) {
+            CompletableFuture<Car> future = CompletableFuture.supplyAsync(() -> {
+                Car car = null;
+                try {
+                    car = new ObjectMapper().readValue(json, new TypeReference<Car>() {});
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                return car;
+            }).exceptionally(e -> {throw new RuntimeException(e.getMessage());});
+            futureList2.add(future);
+        }
 
-            @Override
-            public String method(String string) {
-                return "anoymous class " + this.value;
-            }
-        };
-        this.foo("santa", lambda1);
+//        Car car = JsonUtil.toObject(json, new TypeReference<Car>() {});
+        CompletableFuture.allOf(futureList2.toArray(new CompletableFuture[]{})).join();
+        System.out.println("finish " + stopwatch1.toString());
 
-        Lambda lambda2 = param -> {
-            String value = "Lambda value";
-            return this.value;
-        };
 
-        this.foo("santa", lambda2);
-        Function<String, String> function = param -> param + " from function";
-
-    }
-
-    public void foo(String string, Lambda lambda) {
-        System.out.println(lambda.method(string));
-    }
-
-    public void annotationTest() {
-        Person person = new Person();
-        person.setFirstName("first");
-        person.setLastName("last");
-        person.setAge("11");
-        person.setAddress("address");
-
-        AnnotationProcess annotationProcess = new AnnotationProcess();
-        String json = annotationProcess.convertToJson(person);
-        System.out.println(json);
     }
 }

@@ -1,5 +1,6 @@
 package com.awesome.wow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Car implements Vehicle{
     protected String name;
 
