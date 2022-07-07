@@ -2,6 +2,7 @@ package com.awesome.wow.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import lombok.Data;
 
 @Data
@@ -33,5 +34,7 @@ public class JsonUtil {
         return result;
     }
 
-
+    public static <T> ObjectReader getObjectReader(TypeReference<T> valueType) {
+        return getMapper().readerFor(valueType);
+    }
 }
