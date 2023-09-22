@@ -19,31 +19,32 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
         
-        Integer[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+//        Integer[] arr = {};
+        Integer[] arr = {1, 2, 3, 4, 5};
 //        Integer[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-        ArrayQueue<Integer> queue = new ArrayQueue<>();
+        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
         for (int i = 0; i < arr.length; i++) {
-            queue.enqueue(arr[i]);
+            list.addToBack(arr[i]);
         }
-
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        System.out.println(queue.dequeue());
-        queue.enqueue(10);
-        queue.enqueue(11);
-        queue.enqueue(12);
-        queue.enqueue(13);
-        printList(queue);
+        list.addAtIndex(2, 8);
+//        System.out.println(queue.dequeue());
+//        System.out.println(queue.dequeue());
+//        System.out.println(queue.dequeue());
+//        queue.enqueue(10);
+//        queue.enqueue(11);
+//        queue.enqueue(12);
+//        queue.enqueue(13);
+        printList(list);
 
     }
 
-    private static void printList(ArrayQueue<Integer> queue) {
+    private static void printList(SinglyLinkedList<Integer> list) {
         StringBuilder output = new StringBuilder();
-//        SinglyLinkedListNode<Integer> current = list.getHead();
-//        while (current != null) {
-//            output.append(current.getData()).append(", ");
-//            current = current.getNext();
-//        }
+        SinglyLinkedListNode<Integer> current = list.getHead();
+        while (current != null) {
+            output.append(current.getData()).append(", ");
+            current = current.getNext();
+        }
         System.out.println(output);
     }
 
