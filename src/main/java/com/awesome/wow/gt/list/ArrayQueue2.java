@@ -1,11 +1,9 @@
-package com.awesome.wow.gt;
-
-import java.util.NoSuchElementException;
+package com.awesome.wow.gt.list;
 
 /**
  * Your implementation of an ArrayQueue.
  */
-public class ArrayQueue<T> {
+public class ArrayQueue2<T> {
     /*
      * The initial capacity of the ArrayQueue.
      *
@@ -26,35 +24,9 @@ public class ArrayQueue<T> {
      * Recall that Java does not allow for regular generic array creation,
      * so instead we cast an Object[] to a T[] to get the generic typing.
      */
-    public ArrayQueue() {
+    public ArrayQueue2() {
         // DO NOT MODIFY THIS METHOD!
         backingArray = (T[]) new Object[INITIAL_CAPACITY];
-    }
-
-    /**
-     * Adds the data to the back of the queue.
-     *
-     * If sufficient space is not available in the backing array, resize it to
-     * double the current length. When resizing, copy elements to the
-     * beginning of the new array and reset front to 0.
-     *
-     * Method should run in amortized O(1) time.
-     *
-     * @param data the data to add to the back of the queue
-     * @throws java.lang.IllegalArgumentException if data is null
-     */
-    public void enqueue(T data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Input data can't be null");
-        }
-
-        if (size == backingArray.length) {
-            resize();
-        }
-
-        int backIndex= (front + size) % backingArray.length;
-        backingArray[backIndex] = data;
-        size++;
     }
 
     /**
@@ -69,21 +41,17 @@ public class ArrayQueue<T> {
      *
      * Method should run in O(1) time.
      *
+     * ASSUMPTIONS:
+     * - You may assume that the backingArray is not empty.
+     *
      * @return the data formerly located at the front of the queue
-     * @throws java.util.NoSuchElementException if the queue is empty
      */
     public T dequeue() {
-        if (size == 0) {
-            throw new NoSuchElementException("The queue is empty");
-        }
-
-        int removeIndex = front;
-        T removed = backingArray[removeIndex];
-        backingArray[removeIndex] = null;
+        T toBeRemoved = backingArray[front];
+        backingArray[front] = null;
         front = (front + 1) % backingArray.length;
         size--;
-
-        return removed;
+        return toBeRemoved;
     }
 
     /**
@@ -110,16 +78,5 @@ public class ArrayQueue<T> {
     public int size() {
         // DO NOT MODIFY THIS METHOD!
         return size;
-    }
-
-    private void resize() {
-        T[] newBackingArray = (T[]) new Object[backingArray.length * 2];
-
-        for (int i = 1; i <= size; i++) {
-            int index = (front + i - 1) % backingArray.length;
-            newBackingArray[i - 1] = backingArray[index];
-        }
-        front = 0;
-        backingArray = newBackingArray;
     }
 }

@@ -1,4 +1,4 @@
-package com.awesome.wow.gt;
+package com.awesome.wow.gt.list;
 
 public class SinglyLinkedList2<T> {
     /*
