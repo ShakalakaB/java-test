@@ -17,24 +17,6 @@ public class Test {
         Car car4 = Car.builder().keyA(2).keyB(2).name("car2").build();
         Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
-        
-//        Integer[] arr = {};
-//        Integer[] arr = {1, 2, 3, 4, 5};
-        Integer[] arr = {null, null};
-//        Integer[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-//        SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-//        for (int i = 0; i < arr.length; i++) {
-//            list.addToBack(arr[i]);
-//        }
-//        list.addAtIndex(2, 8);
-//        System.out.println(queue.dequeue());
-//        System.out.println(queue.dequeue());
-        System.out.println(arr.length);
-//        queue.enqueue(10);
-//        queue.enqueue(11);
-//        queue.enqueue(12);
-//        queue.enqueue(13);
-//        printList(list);
 
     }
 
