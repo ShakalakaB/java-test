@@ -2,6 +2,7 @@ package com.awesome.wow;
 
 import com.awesome.wow.gt.list.SinglyLinkedList;
 import com.awesome.wow.gt.list.SinglyLinkedListNode;
+import com.awesome.wow.gt.tree.ExternalChainingHashMap;
 import com.awesome.wow.gt.tree.MinHeap;
 
 import java.util.*;
@@ -19,32 +20,37 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
-        MinHeap<Integer> heap = new MinHeap<>();
-        heap.add(1);
-        heap.add(2);
-        heap.add(3);
-        heap.add(4);
-        heap.add(4);
-//        heap.add(5);
-//        heap.add(6);
-//        heap.add(7);
-//        heap.add(8);
-//        heap.add(9);
-        System.out.println(heap.getBackingArray());
-        heap.remove();
-//        heap.remove();
-        System.out.println(heap.getBackingArray());
-
+        int[] t = {0, -1, 14, 3, 4, 5, 6, 7, 8, 9};
+        ExternalChainingHashMap<Integer, Integer> map = new ExternalChainingHashMap<>();
+        for (int item: t) {
+            map.put(item, item);
+        }
+        System.out.println(map);
     }
 
-    private static void printList(SinglyLinkedList<Integer> list) {
-        StringBuilder output = new StringBuilder();
-        SinglyLinkedListNode<Integer> current = list.getHead();
-        while (current != null) {
-            output.append(current.getData()).append(", ");
-            current = current.getNext();
+    public static int[] twoSum(int[] numbers, int target) {
+        if (numbers == null
+                || numbers.length < 3
+                || target < (numbers[1] + numbers[2])
+                || target > (numbers[1] + numbers[numbers.length - 1])) {
+            return new int[]{};
         }
-        System.out.println(output);
+
+        int leftIndex = 1;
+        int rightIndex = numbers.length - 1;
+        int sum = numbers[leftIndex] + numbers[rightIndex];
+        while (rightIndex > leftIndex) {
+            sum = numbers[leftIndex] + numbers[rightIndex];
+            if (sum == target) {
+                break;
+            }
+            if (sum > target) {
+                rightIndex = rightIndex - 1;
+            } else {
+                leftIndex = leftIndex + 1;
+            }
+        }
+        return new int[]{leftIndex, rightIndex};
     }
 
 }
