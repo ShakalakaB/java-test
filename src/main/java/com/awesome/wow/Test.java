@@ -20,6 +20,7 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
+        Set<Integer> set = new HashSet<>();
         int[] t = {0, -1, 14, 3, 4, 5, 6, 7, 8, 9};
         ExternalChainingHashMap<Integer, Integer> map = new ExternalChainingHashMap<>();
         for (int item: t) {

@@ -138,6 +138,42 @@ public class BST<T extends Comparable<? super T>> {
     }
 
     /**
+     * Returns whether or not data matching the given parameter is contained
+     * within the tree.
+     *
+     * This should be done recursively.
+     *
+     * Hint: Should you use value equality or reference equality?
+     *
+     * Must be O(log n) for best and average cases and O(n) for worst case.
+     *
+     * @param data The data to search for. You may assume data is never null.
+     * @return true if the parameter is contained within the tree, false otherwise.
+     */
+    public boolean contains(T data) {
+        BSTNode<T> node = compareNode(root, data);
+        if (node == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private BSTNode<T> compareNode(BSTNode<T> node, T data) {
+        if (node == null) {
+            return null;
+        }
+
+        if (data.compareTo(node.getData()) > 0) { // data > node.data
+            return compareNode(node.getRight(), data);
+        } else if (data.compareTo(node.getData()) < 0) { // data < node.data
+            return compareNode(node.getLeft(), data);
+        }
+        // data == node.data
+        return node;
+    }
+
+    /**
      * Returns the root of the tree.
      *
      * For grading purposes only. You shouldn't need to use this method since
