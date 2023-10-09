@@ -169,6 +169,32 @@ public class ExternalChainingHashMap<K, V> {
     }
 
     /**
+     * Returns whether or not the key is in the map.
+     *
+     * @param key The key to search for in the map. You may assume that the
+     *            key is never null.
+     * @return true if the key is contained within the map, false otherwise.
+     */
+    public boolean containsKey(K key) {
+        int index = Math.abs(key.hashCode() % table.length);
+
+        if (table[index] == null) {
+            return false;
+        }
+
+        ExternalChainingMapEntry<K, V> entry = table[index];
+
+        while (entry != null) {
+            if (entry.getKey().equals(key)) {
+                return true;
+            }
+            entry = entry.getNext();
+        }
+
+        return false;
+    }
+
+    /**
      * Helper method stub for resizing the backing table to length.
      *
      * This method should be called in put() if the backing table needs to
