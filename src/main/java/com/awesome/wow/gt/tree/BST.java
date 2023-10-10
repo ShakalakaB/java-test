@@ -137,6 +137,57 @@ public class BST<T extends Comparable<? super T>> {
         return node;
     }
 
+    public T remove2(T data) {
+        BSTNode<T> container = new BSTNode<>(null);
+        root = removeNode2(root, container, data);
+
+        return container.getData();
+    }
+
+    private BSTNode<T> removeNode2(BSTNode<T> node, BSTNode<T> container, T data) {
+        if (node == null) {
+            throw new NoSuchElementException("The data is not in the tree");
+        }
+
+        if (data.compareTo(node.getData()) > 0) { // data > node.data
+            node.setRight(removeNode2(node.getRight(), container, data));
+        } else if (data.compareTo(node.getData()) < 0) { // data < node.data
+            node.setLeft(removeNode2(node.getLeft(), container, data));
+        } else {  // data == node.data
+            container.setData(node.getData());
+            size--;
+
+            // no child
+            if (node.getLeft() == null && node.getRight() == null) {
+                return null;
+            }
+
+            // one child
+            if ((node.getLeft() != null && node.getRight() == null)) {
+                return node.getLeft();
+            }
+            if (node.getLeft() == null && node.getRight() != null) {
+                return node.getRight();
+            }
+            // two child
+            BSTNode<T> container2 = new BSTNode<>(null);
+            node.setLeft(removePredecessor(node.getLeft(), container2));
+            node.setData(container2.getData());
+        }
+
+        return node;
+    }
+
+    private BSTNode<T> removePredecessor(BSTNode<T> node, BSTNode<T> container) {
+        if (node.getRight() == null) {
+            container.setData(node.getData());
+            return node.getLeft();
+        }
+
+        node.setRight(removePredecessor(node.getRight(), container));
+        return node;
+    }
+
     /**
      * Returns whether or not data matching the given parameter is contained
      * within the tree.
@@ -171,6 +222,31 @@ public class BST<T extends Comparable<? super T>> {
         }
         // data == node.data
         return node;
+    }
+
+    /**
+     * Returns the data from the tree matching the given parameter.
+     *
+     * This should be done recursively.
+     *
+     * Do not return the same data that was passed in. Return the data that
+     * was stored in the tree.
+     *
+     * Hint: Should you use value equality or reference equality?
+     *
+     * Must be O(log n) for best and average cases and O(n) for worst case.
+     *
+     * @param data The data to search for. You may assume data is never null.
+     * @return The data in the tree equal to the parameter.
+     * @throws java.util.NoSuchElementException If the data is not in the tree.
+     */
+    public T get(T data) {
+        BSTNode<T> node = compareNode(root, data);
+        if (node == null) {
+            throw new NoSuchElementException("The data is not in the tree");
+        }
+
+        return node.getData();
     }
 
     /**
