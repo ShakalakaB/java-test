@@ -2,6 +2,7 @@ package com.awesome.wow;
 
 import com.awesome.wow.gt.list.SinglyLinkedList;
 import com.awesome.wow.gt.list.SinglyLinkedListNode;
+import com.awesome.wow.gt.sort.Sorting;
 import com.awesome.wow.gt.tree.AVL;
 import com.awesome.wow.gt.tree.ExternalChainingHashMap;
 import com.awesome.wow.gt.tree.MinHeap;
@@ -21,13 +22,14 @@ public class Test {
         Car car5 = Car.builder().keyA(2).keyB(3).name("car2").build();
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
-        AVL<Integer> avl = new AVL<>();
-        Integer[] nums = {2, 1, 3, 0};
-        for (int num : nums) {
-            avl.add(num);
-        }
-        avl.remove(3);
-        System.out.println(avl);
+
+        Integer[] nums = {5, 4, 3, 2, 1};
+//        Sorting.selectionSort(nums, Comparator.naturalOrder());
+//        Sorting.insertionSort(nums, Comparator.naturalOrder());
+        Sorting.bubbleSort(nums, Comparator.naturalOrder());
+        List<Integer> list = Arrays.asList(nums);
+
+        System.out.println(list);
     }
 
     public static int[] twoSum(int[] numbers, int target) {
