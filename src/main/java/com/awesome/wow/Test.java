@@ -9,6 +9,8 @@ import com.awesome.wow.gt.tree.MinHeap;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Test {
 
@@ -24,12 +26,14 @@ public class Test {
 
 
         Integer[] nums = {5, 4, 3, 2, 1};
-//        Sorting.selectionSort(nums, Comparator.naturalOrder());
-//        Sorting.insertionSort(nums, Comparator.naturalOrder());
-        Sorting.bubbleSort(nums, Comparator.naturalOrder());
-        List<Integer> list = Arrays.asList(nums);
+        int[] nums2 = {-125, -124, -123, -122, -1219};
+        Sorting.mergeSort(nums, Comparator.naturalOrder());
+        Sorting.lsdRadixSort(nums2);
 
-        System.out.println(list);
+        System.out.println(Arrays.asList(nums));
+        System.out.println(Arrays.stream(nums2)
+                .boxed()
+                .collect(Collectors.toList()));
     }
 
     public static int[] twoSum(int[] numbers, int target) {
