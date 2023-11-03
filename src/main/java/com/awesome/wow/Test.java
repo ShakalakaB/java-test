@@ -1,5 +1,7 @@
 package com.awesome.wow;
 
+import com.awesome.wow.gt.CharacterComparator;
+import com.awesome.wow.gt.PatternMatching;
 import com.awesome.wow.gt.list.SinglyLinkedList;
 import com.awesome.wow.gt.list.SinglyLinkedListNode;
 import com.awesome.wow.gt.sort.Sorting;
@@ -25,40 +27,10 @@ public class Test {
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
 
-        Integer[] nums = {5, 4, 3, 2, 1};
-        int[] nums2 = {-125, -124, -123, -122, -1219};
-        Sorting.mergeSort(nums, Comparator.naturalOrder());
-        Sorting.lsdRadixSort(nums2);
+        String text = "abacbabadcabacab";
+        String pattern = "abacab";
 
-        System.out.println(Arrays.asList(nums));
-        System.out.println(Arrays.stream(nums2)
-                .boxed()
-                .collect(Collectors.toList()));
-    }
-
-    public static int[] twoSum(int[] numbers, int target) {
-        if (numbers == null
-                || numbers.length < 3
-                || target < (numbers[1] + numbers[2])
-                || target > (numbers[1] + numbers[numbers.length - 1])) {
-            return new int[]{};
-        }
-
-        int leftIndex = 1;
-        int rightIndex = numbers.length - 1;
-        int sum = numbers[leftIndex] + numbers[rightIndex];
-        while (rightIndex > leftIndex) {
-            sum = numbers[leftIndex] + numbers[rightIndex];
-            if (sum == target) {
-                break;
-            }
-            if (sum > target) {
-                rightIndex = rightIndex - 1;
-            } else {
-                leftIndex = leftIndex + 1;
-            }
-        }
-        return new int[]{leftIndex, rightIndex};
+        System.out.println(PatternMatching.boyerMoore(pattern, text, new CharacterComparator()));
     }
 
 }
