@@ -27,10 +27,11 @@ public class Test {
         List<Car> carList = Arrays.asList(car1, car2, car3, car4, car5);
 
 
-        String text = "abacbabadcabacab";
-        String pattern = "abacab";
+        PriorityQueue<Car> queue = new PriorityQueue<>(Comparator.comparing(Car::getKeyA));
+        queue.offer(car1);
+        queue.offer(car2);
 
-        System.out.println(PatternMatching.boyerMoore(pattern, text, new CharacterComparator()));
+        System.out.println(queue.poll().keyA);
     }
 
 }
