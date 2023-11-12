@@ -31,7 +31,8 @@ public class Test {
         queue.offer(car1);
         queue.offer(car2);
 
-        System.out.println(queue.poll().keyA);
+        System.out.println(Arrays.asList(new int[]{1, 2, 3}));
+        System.out.println(Arrays.asList(new Integer[]{1, 2, 3}));
     }
 
 }
